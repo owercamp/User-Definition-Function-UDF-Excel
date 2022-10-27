@@ -1,0 +1,14 @@
+{
+    "app_name": "SOA",
+    "description": "",
+    "author": "Ower A Campos",
+    "email": "ower.campos@soandes.co",
+    "create_ate": "Thu Oct 27 2022 16:42:17 GMT-0500 (hora estándar de Colombia)",
+    "excel_file": "SOA.xlsm",
+    "vba_folder": "vba-files",
+    "ribbon_file": "customUI14",
+    "ribbon_folder": "ribbons",
+    "logs": "on",
+    "xvba_packages": {},
+    "xvba_dev_packages": {}
+}
