@@ -1,6 +1,6 @@
 VERSION 1.0 CLASS
 BEGIN
-  MultiUse = -1  'True
+MultiUse = -1  'True
 END
 Attribute VB_Name = "ThisWorkbook"
 Attribute VB_GlobalNameSpace = False
@@ -13,6 +13,31 @@ Private Sub Workbook_Open()
     Call infoInterpretacion
     Call infoBuscarop
     Call DescribeFunctionContarDato
+    Call infoIMedicalFacture
+End Sub
+
+Private  Sub infoIMedicalFacture()
+
+    Dim NombreFunc As String
+    Dim DescFunc As String
+    Dim Categoria As String
+    Dim DescArg(1 To 4) As String
+
+    NombreFunc = "IMEDICALFACTURE"
+    DescFunc = "Trae el precios de facturaci"&Chr(243)&"n en Avancys segun corresponde N"&Chr(186)&" de indetificaci"&Chr(243)&"n y codigo CUPS"
+    Categoria = "SOA"
+    DescArg(1) = "N"&Chr(250)&"mero de identificaci"&Chr(243)&"n a buscar"
+    DescArg(2) = "Matriz en la cual se consulta el N"&Chr(250)&"mero de identificaci"&Chr(243)&"n"
+    DescArg(3) = "N"&Chr(250)&"mero de identificaci"&Chr(243)&"n CUPS a buscar"
+    DescArg(4) = "Matriz en la cual se consulta el N"&Chr(250)&"mero de identificaci"&Chr(243)&"n CUPS"
+
+    On Error Resume Next
+    Application.MacroOptions _
+    Macro:=NombreFunc, _
+    Description:=DescFunc, _
+    Category:=Categoria, _
+    ArgumentDescriptions:=DescArg
+    
 End Sub
 
 Private Sub infoBuscarop()
@@ -21,21 +46,21 @@ Private Sub infoBuscarop()
     Dim DescFunc As String
     Dim Categoria As String
     Dim DescArg(1 To 3) As String
-    
+
     NombreFunc = "BUSCAROP"
     DescFunc = "Trae la informaci"&Chr(243)&"n hacia la izquierda o derecha desde un punto de partida" & vbNewLine & "(punto de busqueda)"
     Categoria = "SOA"
     DescArg(1) = "Valor a buscar dentro de una matriz"
     DescArg(2) = "Matriz en la cual se consulta el valor_buscado"
     DescArg(3) = "Posici"&Chr(243)&"n hacia la derecha o izquierda de la columna requerida seg"&Chr(250)&"n plano cartesiano n"&Chr(250)&"mero positivo o negativo"
-    
+
     On Error Resume Next
     Application.MacroOptions _
-            Macro:=NombreFunc, _
-            Description:=DescFunc, _
-            Category:=Categoria, _
-            ArgumentDescriptions:=DescArg
-    
+    Macro:=NombreFunc, _
+    Description:=DescFunc, _
+    Category:=Categoria, _
+    ArgumentDescriptions:=DescArg
+
 End Sub
 
 Private Sub infoInterpretacion()
@@ -44,21 +69,21 @@ Private Sub infoInterpretacion()
     Dim DescFunc As String
     Dim Categoria As String
     Dim DescArg(1 To 3) As String
-    
+
     NombreFunc = "INTERPRETACION"
     DescFunc = "clasificaci"&Chr(243)&"n como NORMAL o ANORMAL segun indice"
     Categoria = "SOA"
     DescArg(1) = "valor o celda a consultar"
     DescArg(2) = "Valor de rango o celda con rangos para la validaci"&Chr(243)&"n ejm: 1000 a 5000"
     DescArg(3) = "Valor por el cual va ha hacer dividido valorRango ejm: 'a'"
-    
+
     On Error Resume Next
     Application.MacroOptions _
-            Macro:=NombreFunc, _
-            Description:=DescFunc, _
-            Category:=Categoria, _
-            ArgumentDescriptions:=DescArg
-    
+    Macro:=NombreFunc, _
+    Description:=DescFunc, _
+    Category:=Categoria, _
+    ArgumentDescriptions:=DescArg
+
 End Sub
 
 Private Sub DescribeFunctionContarDato()
@@ -75,8 +100,9 @@ Private Sub DescribeFunctionContarDato()
     '
     On Error Resume Next
     Application.MacroOptions _
-            Macro:=NombreFunc, _
-            Description:=DescFunc, _
-            Category:=Categoria, _
-            ArgumentDescriptions:=DescArg
+    Macro:=NombreFunc, _
+    Description:=DescFunc, _
+    Category:=Categoria, _
+    ArgumentDescriptions:=DescArg
+
 End Sub
