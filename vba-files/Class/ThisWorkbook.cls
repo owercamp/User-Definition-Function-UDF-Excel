@@ -14,6 +14,7 @@ Private Sub Workbook_Open()
     Call infoBuscarop
     Call DescribeFunctionContarDato
     Call infoIMedicalFacture
+    Call DescribeFunctionFramingham
 End Sub
 
 Private  Sub infoIMedicalFacture()
@@ -37,7 +38,7 @@ Private  Sub infoIMedicalFacture()
     Description:=DescFunc, _
     Category:=Categoria, _
     ArgumentDescriptions:=DescArg
-    
+
 End Sub
 
 Private Sub infoBuscarop()
@@ -97,6 +98,32 @@ Private Sub DescribeFunctionContarDato()
     Categoria = "SOA"
     DescArg(1) = "Es el rango de celdas para validar"
     DescArg(2) = "Es el valor a evaluar"
+    '
+    On Error Resume Next
+    Application.MacroOptions _
+    Macro:=NombreFunc, _
+    Description:=DescFunc, _
+    Category:=Categoria, _
+    ArgumentDescriptions:=DescArg
+
+End Sub
+
+Private Sub DescribeFunctionFramingham()
+    Dim NombreFunc As String
+    Dim DescFunc As String
+    Dim Categoria As String
+    Dim DescArg(1 To 7) As String
+    '
+    NombreFunc = "FRAMINGHAM"
+    DescFunc = "Realiza la evaluaci"&Chr(243)&"n para determinar el riesgo CARDIOVASCULAR seg"&Chr(250)&"n los datos proporcionados"
+    Categoria = "SOA"
+    DescArg(1) = "Es la celda en donde se encuentra el valor de la EDAD, tambien se puede proporcionar directamente su valor"
+    DescArg(2) = "Es la celda en donde se encuentra el valor de COLESTEROL TOTAL, tambien se puede proporcionar directamente su valor"
+    DescArg(3) = "Es la celda en donde se encuentra el valor de COLESTEROL DE ALTA DENSIDAD [HDL] INMUNOLOGICO DIRECTO, tambien se puede proporcionar directamente su valor"
+    DescArg(4) = "Es la celda en donde se encuentra el valor de TENSION ARTERIAL, tambien se puede proporcionar directamente su valor, en este caso solo debe ser puesta la TENSION SISTOLICA"
+    DescArg(5) = "Es la celda en donde se encuentra el valor de FUMA, tambien se puede proporcionar directamente su valor, en este caso solo debe ser puesto SI o NO"
+    DescArg(6) = "Valor que indica si sufre de DIABETES, los valores permitidos son SI o NO"
+    DescArg(7) = "Es la celda en donde se encuentra el valor del SEXO, tambien se puede proporcionar directamente su valor, en este caso solo debe ser puesto MASCULINO o FEMENINO"
     '
     On Error Resume Next
     Application.MacroOptions _
