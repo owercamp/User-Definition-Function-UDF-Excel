@@ -388,7 +388,7 @@ End Function
 
 Public Property Application As Application 
 
-Public Property Areas As Areas
+Public Property AreAs Areas
 
 Public Property Borders As Variant
 
