@@ -24,6 +24,7 @@ Public Function BUSCAROP(ByVal valor_buscado As Variant, ByRef rango_busqueda As
   For Each Item In rango_busqueda
     If VBA.Trim(Item) = VBA.Trim(valor_buscado) Then
       BUSCAROP = Item.Offset(0, posicion)
+      Exit For
     End If
   Next Item
 
@@ -57,12 +58,14 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
   For Each item In rng_identity
     If Trim(item) = Trim(identity) Then
       rowU = item.Row
+      Exit For
     End If
   Next item
 
   For Each item In rng_cups
     If Trim(item) = Trim(cups) Then
       columnU = item.Column
+      Exit For
     End If
   Next item
 
