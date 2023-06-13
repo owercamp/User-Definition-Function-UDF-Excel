@@ -2,24 +2,24 @@ Attribute VB_Name = "Interpretation"
 Option Explicit
 
 Public Function INTERPRETACION(ByVal valorBuscado As Variant, ByVal valorRango As String, ByVal separador As String) As String
-  ' Funcion que devuelve una interpretacion (NORMAL o ANORMAL) de acuerdo a si el valor buscado está dentro del rango definido por valorRango y separador
+  'TODO: Funcion que devuelve una interpretacion (NORMAL o ANORMAL) de acuerdo a si el valor buscado está dentro del rango definido por valorRango y separador
   '
-  ' Parametros:
-  ' - valorBuscado: El valor que se desea buscar dentro del rango
-  ' - valorRango: El rango de valores separados por el separador definido. Ejemplo: "5-10"
-  ' - separador: El separador usado para separar los valores del rango. Ejemplo: "-"
+  '? Parametros:
+  '? @param valorBuscado: El valor que se desea buscar dentro del rango
+  '? @param valorRango: El rango de valores separados por el separador definido. Ejemplo: "5@param10"
+  '? @param separador: El separador usado para separar los valores del rango. Ejemplo: "-"
   '
-  ' Devuelve:
-  ' - "NORMAL" si el valor buscado esta dentro del rango
-  ' - "ANORMAL" si el valor buscado esta fuera del rango
-  ' - "ERROR: El valor minimo no es un numero valido" si el valor minimo del rango no es un numero valido
-  ' - "ERROR: El valor maximo no es un numero valido" si el valor maximo del rango no es un numero valido
+  '? Devuelve:
+  '? @return "NORMAL" si el valor buscado esta dentro del rango
+  '? @return "ANORMAL" si el valor buscado esta fuera del rango
+  '? @return "ERROR: El valor minimo no es un numero valido" si el valor minimo del rango no es un numero valido
+  '? @return "ERROR: El valor maximo no es un numero valido" si el valor maximo del rango no es un numero valido
 
-  ' Se divide el rango en dos valores, minimo y maximo
+  '* Se divide el rango en dos valores, minimo y maximo
   Dim separateVal As Variant
   separateVal = VBA.Split(VBA.UCase(valorRango), VBA.UCase(separador))
 
-  ' Se intenta parsear cada valor del rango como un numero entero
+  '* Se intenta parsear cada valor del rango como un numero entero
   Dim Min As Long
   Dim Max As Long
   If Not TryParseInt(separateVal(0), Min) Then
@@ -31,7 +31,7 @@ Public Function INTERPRETACION(ByVal valorBuscado As Variant, ByVal valorRango A
     Exit Function
   End If
 
-  ' Se compara el valor buscado con el rango
+  '* Se compara el valor buscado con el rango
   If valorBuscado >= Min And valorBuscado <= Max Then
     INTERPRETACION = "NORMAL"
   Else
@@ -55,16 +55,15 @@ Private Function TryParseInt(ByVal value As String, ByRef result As Long) As Boo
 End Function
 
 Public Function BUSCAROP(ByVal valor_buscado As Variant, ByRef rango_busqueda As Range, ByVal posicion As Variant) As Variant
-  ' Busca un valor en un rango y devuelve el valor de la celda correspondiente en una columna determinada.
+  'TODO: Busca un valor en un rango y devuelve el valor de la celda correspondiente en una columna determinada.
   '
-  ' Argumentos:
-  '   - valor_buscado: El valor que se esta buscando en el rango.
-  '   - rango_busqueda: El rango de celdas donde buscar.
-  '   - posicion: El desplazamiento de la columna desde la celda encontrada hasta la celda que se debe devolver.
+  '? Argumentos:
+  '?  @param valor_buscado: El valor que se esta buscando en el rango.
+  '?  @param rango_busqueda: El rango de celdas donde buscar.
+  '?  @param posicion: El desplazamiento de la columna desde la celda encontrada hasta la celda que se debe devolver.
   '
-  ' Retorna:
-  '   El valor de la celda correspondiente en la columna especificada por posicion, si el valor buscado se encuentra en el rango.
-  '   Si no se encuentra ninguna coincidencia en el rango de búsqueda, devuelve un error #N/A.
+  '? Retorna:
+  '? @return El valor de la celda correspondiente en la columna especificada por posicion, si el valor buscado se encuentra en el rango. Si no se encuentra ninguna coincidencia en el rango de búsqueda, devuelve un error #N/A.
 
   Dim Item As Variant
 
@@ -79,12 +78,12 @@ Public Function BUSCAROP(ByVal valor_buscado As Variant, ByRef rango_busqueda As
 End Function
 
 Public Function CONTARDATO(ByVal data As Object, ByVal text As String) As Integer
-  ' Esta funcion cuenta el numero de veces que aparece una cadena en una coleccion.
-  ' Parámetros:
-  '   - data: un objeto de coleccion
-  '   - text: una cadena para buscar en la coleccion
-  ' Devoluciones:
-  '   - Un entero que representa el numero de veces que aparece la cadena en la coleccion.
+  'TODO: Esta funcion cuenta el numero de veces que aparece una cadena en una coleccion.
+  '? Parámetros:
+  '?  @param data: un objeto de coleccion
+  '?  @param text: una cadena para buscar en la coleccion
+  '? Devoluciones:
+  '?  @return Un entero que representa el numero de veces que aparece la cadena en la coleccion.
 
   Dim contador As Integer
   Dim List As Object
@@ -102,13 +101,21 @@ Public Function CONTARDATO(ByVal data As Object, ByVal text As String) As Intege
 End Function
 
 Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As Range, ByVal cups As Variant, ByRef rng_cups As Range) As LongPtr
-  ' Devuelve el valor ubicado en la intersección de los índices de fila y columna
-  ' correspondientes a los valores de identity y cups dentro de los rangos especificados.
+  'TODO: Devuelve el valor ubicado en la intersección de los índices de fila y columna correspondientes a los valores de identity y cups dentro de los rangos especificados.
+  '
+  '? Argumentos:
+  '?  @param identity: El valor de identity que se desea buscar dentro de los rangos.
+  '?  @param rng_identity: El rango de celdas donde buscar.
+  '?  @param cups: El valor de cups que se desea buscar dentro de los rangos.
+  '?  @param rng_cups: El rango de celdas donde buscar.
+  '
+  '? Devoluciones:
+  '? @return El valor ubicado en la intersección de los índices de fila y columna correspondientes a los valores de identity y cups dentro de los rangos especificados.
 
   Dim item As Variant
   Dim rowU, columnU As LongPtr
 
-  ' Buscar el índice de fila correspondiente al valor de identity dado
+  '* Buscar el índice de fila correspondiente al valor de identity dado
   For Each item In rng_identity
     If Trim(item) = Trim(identity) Then
       rowU = item.Row
@@ -116,7 +123,7 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
     End If
   Next item
 
-  ' Buscar el índice de columna correspondiente al valor de cups dado
+  '* Buscar el índice de columna correspondiente al valor de cups dado
   For Each item In rng_cups
     If Trim(item) = Trim(cups) Then
       columnU = item.Column
@@ -124,26 +131,24 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
     End If
   Next item
 
-  ' Devolver el valor ubicado en la intersección de los índices de fila y columna
+  '* Devolver el valor ubicado en la intersección de los índices de fila y columna
   IMEDICALFACTURE = rng_identity.Parent.Cells(rowU, columnU)
 End Function
 
 Public Function FRAMINGHAM(ByVal Age As Integer, ByVal Cholesterol As Integer, ByVal Hdl As Integer, ByVal Ts_tbs As String, ByVal Smoking As String, ByVal Diabetes As String, ByVal Sex As String) As String
-  ' Esta función utiliza el modelo de Framingham para estimar el riesgo de enfermedad cardiovascular
-  ' en función de varios factores de riesgo.
+  'TODO: Esta función utiliza el modelo de Framingham para estimar el riesgo de enfermedad cardiovascular en función de varios factores de riesgo.
   '
-  ' Args:
-  '     Age (int): edad de la persona (en años).
-  '     Cholesterol (int): colesterol total de la persona (en mg/dL).
-  '     Hdl (int): lipoproteína de alta densidad (HDL) de la persona (en mg/dL).
-  '     Ts_tbs (str): relación entre el colesterol total y el HDL (en formato "X/Y").
-  '     Smoking (str): indica si la persona fuma ("Fuma" si es fumador, de lo contrario "").
-  '     Diabetes (str): indica si la persona tiene diabetes ("Si" si tiene diabetes, de lo contrario "").
-  '     Sex (str): género de la persona ("Femenino" o "Masculino").
+  '? Args:
+  '? @param Age (int): edad de la persona (en años).
+  '? @param Cholesterol (int): colesterol total de la persona (en mg/dL).
+  '? @param Hdl (int): lipoproteína de alta densidad (HDL) de la persona (en mg/dL).
+  '? @param Ts_tbs (str): relación entre el colesterol total y el HDL (en formato "X/Y").
+  '? @param Smoking (str): indica si la persona fuma ("Fuma" si es fumador, de lo contrario "").
+  '? @param Diabetes (str): indica si la persona tiene diabetes ("Si" si tiene diabetes, de lo contrario "").
+  '? @param Sex (str): género de la persona ("Femenino" o "Masculino").
   '
-  ' Returns:
-  '     str: cadena que indica el nivel de riesgo cardiovascular, expresado como un porcentaje y una categoría
-  '          de riesgo ("BAJO", "MODERADO", "ALTO" o "MUY ALTO").
+  '? Returns:
+  '? @return str: cadena que indica el nivel de riesgo cardiovascular, expresado como un porcentaje y una categoría del nivel de riesgo ("BAJO", "MODERADO", "ALTO" o "MUY ALTO").
 
   Dim Ts_tb() As String
   Dim Ts As Integer
