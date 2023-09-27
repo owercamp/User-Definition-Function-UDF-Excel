@@ -1,7 +1,7 @@
 Attribute VB_Name = "Interpretation"
 Option Explicit
 
-Public Function INTERPRETACION(ByVal valorBuscado As Variant, ByVal valorRango As String, ByVal separador As String) As String
+Public Function INTERPRETACION(Byval valorBuscado As Variant, Byval valorRango As String, Byval separador As String) As String
   'TODO: Funcion que devuelve una interpretacion (NORMAL o ANORMAL) de acuerdo a si el valor buscado está dentro del rango definido por valorRango y separador
   '
   '? Parametros:
@@ -24,11 +24,11 @@ Public Function INTERPRETACION(ByVal valorBuscado As Variant, ByVal valorRango A
   Dim Max As Long
   If Not TryParseInt(separateVal(0), Min) Then
     INTERPRETACION = "ERROR: El valor m"&Chr(237)&"nimo no es un n"&Chr(250)&"mero v"&Chr(225)&"lido"
-    Exit Function
+   Exit Function
   End If
   If Not TryParseInt(separateVal(1), Max) Then
     INTERPRETACION = "ERROR: El valor m"&Chr(225)&"ximo no es un n"&Chr(250)&"mero v"&Chr(225)&"lido"
-    Exit Function
+   Exit Function
   End If
 
   '* Se compara el valor buscado con el rango
@@ -39,7 +39,7 @@ Public Function INTERPRETACION(ByVal valorBuscado As Variant, ByVal valorRango A
   End If
 End Function
 
-Private Function TryParseInt(ByVal value As String, ByRef result As Long) As Boolean
+Private Function TryParseInt(Byval value As String, Byref result As Long) As Boolean
 
   ''' <summary>
   ''' Toma un valor de cadena y trata de convertirlo en un numero entero largo. Devuelve verdadero si la conversion fue exitosa, falso de lo contrario.
@@ -51,10 +51,10 @@ Private Function TryParseInt(ByVal value As String, ByRef result As Long) As Boo
   On Error Resume Next
   result = CLng(value)
   TryParseInt = (Err.Number = 0)
-  On Error GoTo 0
+  On Error Goto 0
 End Function
 
-Public Function BUSCAROP(ByVal valor_buscado As Variant, ByRef rango_busqueda As Range, ByVal posicion As Variant) As Variant
+Public Function BUSCAROP(Byval valor_buscado As Variant, Byref rango_busqueda As Range, Byval posicion As Variant) As Variant
   'TODO: Busca un valor en un rango y devuelve el valor de la celda correspondiente en una columna determinada.
   '
   '? Argumentos:
@@ -70,14 +70,14 @@ Public Function BUSCAROP(ByVal valor_buscado As Variant, ByRef rango_busqueda As
   For Each Item In rango_busqueda
     If VBA.Trim(Item) = VBA.Trim(valor_buscado) Then
       BUSCAROP = Item.Offset(0, posicion)
-      Exit Function
+     Exit Function
     End If
   Next Item
 
   BUSCAROP = CVErr(2042)
 End Function
 
-Public Function CONTARDATO(ByVal data As Object, ByVal text As String) As Integer
+Public Function CONTARDATO(Byval data As Object, Byval text As String) As Integer
   'TODO: Esta funcion cuenta el numero de veces que aparece una cadena en una coleccion.
   '? Parámetros:
   '?  @param data: un objeto de coleccion
@@ -100,7 +100,7 @@ Public Function CONTARDATO(ByVal data As Object, ByVal text As String) As Intege
   CONTARDATO = contador
 End Function
 
-Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As Range, ByVal cups As Variant, ByRef rng_cups As Range) As LongPtr
+Public Function IMEDICALFACTURE(Byval identity As Variant, Byref rng_identity As Range, Byval cups As Variant, Byref rng_cups As Range) As LongPtr
   'TODO: Devuelve el valor ubicado en la intersección de los índices de fila y columna correspondientes a los valores de identity y cups dentro de los rangos especificados.
   '
   '? Argumentos:
@@ -119,7 +119,7 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
   For Each item In rng_identity
     If Trim(item) = Trim(identity) Then
       rowU = item.Row
-      Exit For
+     Exit For
     End If
   Next item
 
@@ -127,7 +127,7 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
   For Each item In rng_cups
     If Trim(item) = Trim(cups) Then
       columnU = item.Column
-      Exit For
+     Exit For
     End If
   Next item
 
@@ -135,85 +135,271 @@ Public Function IMEDICALFACTURE(ByVal identity As Variant, ByRef rng_identity As
   IMEDICALFACTURE = rng_identity.Parent.Cells(rowU, columnU)
 End Function
 
-Public Function FRAMINGHAM(ByVal Age As Integer, ByVal Cholesterol As Integer, ByVal Hdl As Integer, ByVal Ts_tbs As String, ByVal Smoking As String, ByVal Diabetes As String, ByVal Sex As String) As String
-  'TODO: Esta función utiliza el modelo de Framingham para estimar el riesgo de enfermedad cardiovascular en función de varios factores de riesgo.
-  '
-  '? Args:
-  '? @param Age (int): edad de la persona (en años).
-  '? @param Cholesterol (int): colesterol total de la persona (en mg/dL).
-  '? @param Hdl (int): lipoproteína de alta densidad (HDL) de la persona (en mg/dL).
-  '? @param Ts_tbs (str): relación entre el colesterol total y el HDL (en formato "X/Y").
-  '? @param Smoking (str): indica si la persona fuma ("Fuma" si es fumador, de lo contrario "").
-  '? @param Diabetes (str): indica si la persona tiene diabetes ("Si" si tiene diabetes, de lo contrario "").
-  '? @param Sex (str): género de la persona ("Femenino" o "Masculino").
-  '
-  '? Returns:
-  '? @return str: cadena que indica el nivel de riesgo cardiovascular, expresado como un porcentaje y una categoría del nivel de riesgo ("BAJO", "MODERADO", "ALTO" o "MUY ALTO").
+Public Function FRAMINGHAM(Byval Age As Integer, Byval Cholesterol As Integer, Byval Hdl As Integer, Byval Ts_tbs As String, Byval Smoking As String, Byval Diabetes As String, Byval Sex As String) As String
 
-  Dim Ts_tb() As String
-  Dim Ts As Integer
-  Dim Logarithm As Double, finalAge As Double, finalCholesterol As Double, finalHdl As Double, finalTs As Double, finalSmoking As Double, finalDiabetes As Double, summation As Double, totalValue As Double
-  Dim logOfAge As Variant, logOfCT As Variant, logOfHDL As Variant, logOfTS As Variant, logOfSmoke As Variant, logOfDiabetes As Variant, defaultValues As Variant, result As Variant, total As Variant
+  Dim valueAge As Integer, valueDiabetes As Integer, valueSmoking As Integer, valueCholesterol As Integer
+  Dim valueHdl As Integer, valueSystolic As Integer, valueDiastolic As Integer, valuebloodPressure As Integer
 
-  '' los valores de la posicion 0 son para el Sex femenino y posicion 1 para el masculino ''
-  logOfAge = Array(2.32888, 3.06117)
-  logOfCT = Array(1.20904, 1.1237)
-  logOfHDL = Array(-0.70833, -0.93263)
-  logOfTS = Array(2.76157, 1.93303)
-  logOfSmoke = Array(0.52873, 0.65451)
-  logOfDiabetes = Array(0.69154, 0.57367)
-  defaultValues = Array(26.1931, 23.9802)
+  ' systolic - diastolic blood pressure separation
+  Dim tmpSystolic As Integer
+  Dim tmpDiastolic As Integer
+  valueSystolic = VBA.Split(Ts_tbs, "/")(0)
+  valueDiastolic = VBA.Split(Ts_tbs, "/")(1)
 
-  Ts_tb = VBA.Split(Ts_tbs, "/")
-  Ts = CInt(Ts_tb(0))
-
-  Select Case Trim(UCase(Sex))
-   Case "FEMENINO"
-    finalAge = WorksheetFunction.Ln(Age) * logOfAge(0)
-    finalCholesterol = WorksheetFunction.Ln(Cholesterol) * logOfCT(0)
-    finalHdl = WorksheetFunction.Ln(Hdl) * logOfHDL(0)
-    finalTs = WorksheetFunction.Ln(Ts) * logOfTS(0)
-    finalSmoking = 0
-    finalDiabetes = 0
-    If Trim(UCase(Smoking)) = "FUMA" Then
-      finalSmoking = logOfSmoke(0)
-    End If
-    If Trim(UCase(Diabetes)) = "SI" Then
-      finalDiabetes = logOfDiabetes(0)
-    End If
-
-    summation = finalAge + finalCholesterol + finalHdl + finalTs + finalSmoking + finalDiabetes
-    totalValue = VBA.Exp(summation - defaultValues(0))
-    result = 1 - (WorksheetFunction.Power(0.95012, totalValue))
-    total = Round(result, 3) * 100
+  Select Case VBA.UCase(Sex)
    Case "MASCULINO"
-    finalAge = Round((WorksheetFunction.Ln(Age) * logOfAge(1)), 8)
-    finalCholesterol = Round((WorksheetFunction.Ln(Cholesterol) * logOfCT(1)), 9)
-    finalHdl = Round((WorksheetFunction.Ln(Hdl) * logOfHDL(1)), 9)
-    finalTs = Round((WorksheetFunction.Ln(Ts) * logOfTS(1)), 9)
-    finalSmoking = 0
-    finalDiabetes = 0
-    If Trim(UCase(Smoking)) = "FUMA" Or Trim(UCase(Smoking)) = "SI" Then
-      finalSmoking = logOfSmoke(1)
+    ' age validation by gender
+    Select Case VBA.CInt(Age)
+     Case 30 To 34
+      valueAge = -1
+     Case 35 To 39
+      valueAge = 0
+     Case 40 To 44
+      valueAge = 1
+     Case 45 To 49
+      valueAge = 2
+     Case 50 To 54
+      valueAge = 3
+     Case 55 To 59
+      valueAge = 4
+     Case 60 To 64
+      valueAge = 5
+     Case 65 To 69
+      valueAge = 6
+     Case 70 To 74
+      valueAge = 7
+     Case Is < 30
+      valueAge = -1
+     Case Else
+      valueAge = "Valor no permitido"
+    End Select
+    ' validation of diabetes by gender
+    Select Case VBA.UCase(Diabetes)
+     Case "SI", 1
+      valueDiabetes = 2
+     Case Else
+      valueDiabetes = 0
+    End Select
+    ' validation of smoking by gender
+    Select Case VBA.UCase(Smoking)
+     Case "SI", 1, "FUMA"
+      valueSmoking = 2
+     Case Else
+      valueSmoking = 0
+    End Select
+    ' validation of total cholesterol by gender
+    Select Case VBA.CInt(Cholesterol)
+     Case Is < 160
+      valueCholesterol = -3
+     Case 160 To 199
+      valueCholesterol = 0
+     Case 200 To 239
+      valueCholesterol = 1
+     Case 240 To 279
+      valueCholesterol = 2
+     Case Is >= 280
+      valueCholesterol = 3
+    End Select
+    ' validation of total cholesterol hdl by gender
+    Select Case VBA.CInt(Hdl)
+     Case Is < 35
+      valueHdl = 2
+     Case 35 To 44
+      valueHdl = 1
+     Case 45 To 59
+      valueHdl = 0
+     Case Is >= 60
+      valueHdl = -2
+    End Select
+    ' blood pressure validation by gender
+    Select Case VBA.CInt(valueSystolic)
+     Case Is <= 129
+      tmpSystolic = 0
+     Case 130 To 139
+      tmpSystolic = 1
+     Case 140 To 159
+      tmpSystolic = 2
+     Case Is >= 160
+      tmpSystolic = 3
+    End Select
+    Select Case VBA.CInt(valueDiastolic)
+     Case Is <= 84
+      tmpDiastolic = 0
+     Case 85 To 89
+      tmpDiastolic = 1
+     Case 90 To 99
+      tmpDiastolic = 2
+     Case Is >= 100
+      tmpDiastolic = 3
+    End Select
+    ' validation of blood pressure
+    If (tmpSystolic >= tmpDiastolic) Then
+      valuebloodPressure = tmpSystolic
+    Else
+      valuebloodPressure = tmpDiastolic
     End If
-    If Trim(UCase(Diabetes)) = "SI" Then
-      finalDiabetes = logOfDiabetes(1)
+   Case "FEMENINO"
+    ' age validation by gender
+    Select Case VBA.CInt(Age)
+     Case 30 To 34
+      valueAge = -9
+     Case 35 To 39
+      valueAge = -4
+     Case 40 To 44
+      valueAge = 0
+     Case 45 To 49
+      valueAge = 3
+     Case 50 To 54
+      valueAge = 6
+     Case 55 To 59
+      valueAge = 7
+     Case 60 To 74
+      valueAge = 8
+     Case Is < 30
+      valueAge = -1
+     Case Else
+      valueAge = "Valor no permitido"
+    End Select
+    ' validation of diabetes by gender
+    Select Case VBA.UCase(Diabetes)
+     Case "SI", 1
+      valueDiabetes = 4
+     Case Else
+      valueDiabetes = 0
+    End Select
+    ' validation of smoking by gender
+    Select Case VBA.UCase(Smoking)
+     Case "SI", 1, "FUMA"
+      valueSmoking = 2
+     Case Else
+      valueSmoking = 0
+    End Select
+    ' validation of total cholesterol by gender
+    Select Case VBA.CInt(Cholesterol)
+     Case Is < 160
+      valueCholesterol = -2
+     Case 160 To 199
+      valueCholesterol = 0
+     Case 200 To 239
+      valueCholesterol = 1
+     Case 240 To 279
+      valueCholesterol = 1
+     Case Is >= 280
+      valueCholesterol = 3
+    End Select
+    ' validation of total cholesterol hdl by gender
+    Select Case VBA.CInt(Hdl)
+     Case Is < 35
+      valueHdl = 5
+     Case 35 To 44
+      valueHdl = 2
+     Case 45 To 49
+      valueHdl = 1
+     Case 50 To 59
+      valueHdl = 0
+     Case Is >= 60
+      valueHdl = -2
+    End Select
+    ' blood pressure validation by gender
+    Select Case VBA.CInt(valueSystolic)
+     Case Is < 120
+      tmpSystolic = -3
+     Case 120 To 139
+      tmpSystolic = 0
+     Case 140 To 159
+      tmpSystolic = 2
+     Case Is >= 160
+      tmpSystolic = 3
+    End Select
+    Select Case VBA.CInt(valueDiastolic)
+     Case Is < 80
+      tmpDiastolic = -3
+     Case 80 To 89
+      tmpDiastolic = 0
+     Case 90 To 99
+      tmpDiastolic = 2
+     Case Is >= 100
+      tmpDiastolic = 3
+    End Select
+    ' validation of blood pressure
+    If (tmpSystolic >= tmpDiastolic) Then
+      valuebloodPressure = tmpSystolic
+    Else
+      valuebloodPressure = tmpDiastolic
     End If
-
-    summation = Round((finalAge + finalCholesterol + finalHdl + finalTs + finalSmoking + finalDiabetes), 7)
-    totalValue = Round(Exp((summation - defaultValues(1))), 9)
-    result = 1 - (WorksheetFunction.Power(0.88936, totalValue))
-    total = Round(result, 3) * 100
   End Select
 
-  If total < 10 Then
-    FRAMINGHAM = CStr(total) & "% - BAJO"
-  ElseIf total >= 10 And total <= 20 Then
-    FRAMINGHAM = CStr(total) & "% - MODERADO"
-  ElseIf total > 20 And total <= 30 Then
-    FRAMINGHAM = CStr(total) & "% - ALTO"
-  ElseIf total > 30 Then
-    FRAMINGHAM = CStr(total) & "% - MUY ALTO"
-  End If
+  Dim total As Integer
+  total = valueAge + valueDiabetes + valueSmoking + valueCholesterol + valueHdl + valuebloodPressure
 
+  Select Case VBA.Ucase(Sex)
+    Case "MASCULINO"
+      Select Case VBA.CInt(total)
+        Case Is <= -1
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 2% Bajo"
+        Case -1 To 1
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 3% Bajo"
+        Case 2
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 4% Bajo"
+        Case 3
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 5% Bajo"
+        Case 4
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 7% Bajo"
+        Case 5
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 8% Bajo"
+        Case 6
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 10% Moderado"
+        Case 7
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 13% Moderado"
+        Case 8
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 16% Moderado"
+        Case 9
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 20% Moderado"
+        Case 10
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 25% Alto"
+        Case 11
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 31% Alto"
+        Case 12
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 37% Alto"
+        Case 13
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 45% Alto"
+        Case Is >= 14
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 53% Alto"
+      End Select
+    Case "FEMENINO"
+      Select Case VBA.CInt(total)
+        Case -2
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 1% Bajo"
+        Case -1 To 1
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 2% Bajo"
+        Case 2 To 3
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 3% Bajo"
+        Case 4 To 5
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 4% Bajo"
+        Case 6
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 5% Bajo"
+        Case 7
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 6% Bajo"
+        Case 8
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 7% Bajo"
+        Case 9
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 8% Bajo"
+        Case 10
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 10% Moderado"
+        Case 11
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 11% Moderado"
+        Case 12
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 13% Moderado"
+        Case 13
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 15% Moderado"
+        Case 14
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 18% Moderado"
+        Case 15
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 20% Moderado"
+        Case 16
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - 24% Alto"
+        Case Is >= 17
+          FRAMINGHAM = "Riesgo de EVC(10 Años) - >27% Alto"
+      End Select
+  End Select
 End Function
